@@ -50,6 +50,14 @@ namespace OfxSharp.NETCore.Tests
         }
 
         [Test]
+        public void Should_read_nospace_header_statements()
+        {
+            OfxDocument ofx = OfxDocumentReader.ReadFile( filePath: "Files/nospace-header.ofx" );
+            ofx.Should().NotBeNull();
+            ofx.SignOn.StatusCode.Should().Be(0);
+        }
+
+        [Test]
         public async Task FromSgmlStreamAsync()
         {
             using var stream = File.OpenRead("Files/itau.ofx");

@@ -122,8 +122,20 @@ namespace OfxSharp
             State state = State.BeforeOfxHeader;
             String line;
 
-            while( ( line = reader.ReadLine() ) != null )
+            while( true )
             {
+                int peek = reader.Peek();
+                if (peek == -1) break;
+                
+                if ((char)peek == '<')
+                {
+                    // Start of SGML found
+                    return sgmlHeaderValues;
+                }
+
+                line = reader.ReadLine();
+                if (line == null) break;
+
                 switch( state )
                 {
                 case State.BeforeOfxHeader:
@@ -137,8 +149,7 @@ namespace OfxSharp
 
                     if( line.IsEmpty() )
                     {
-                        //state = State.StartOfOfxSgml;
-                        return sgmlHeaderValues;
+                        continue;
                     }
                     else
                     {
