@@ -24,9 +24,13 @@ namespace OfxSharp
             {
                 return new CreditAccount( accountElementOrNull );
             }
+            else if( accountElementOrNull.Name == "CCACCTTO" )
+            {
+                return new CreditAccount( accountElementOrNull );
+            }
             else
             {
-                throw new OfxException( message: "Expected null, <BANKACCTFROM>, <BANKACCTTO>, or <CCACCTFROM>, but encountered: <{0}>".Fmt( accountElementOrNull.Name ) );
+                throw new OfxException( message: "Expected null, <BANKACCTFROM>, <BANKACCTTO>, <CCACCTFROM>, or <CCACCTTO>, but encountered: <{0}>".Fmt( accountElementOrNull.Name ) );
             }
         }
 
